@@ -38,10 +38,21 @@ if [ "$need_node" -eq 1 ]; then
   apt-get install -y nodejs
 fi
 
-echo "==> Building the application"
+# Build as the invoking user, not as root: npm leaves root-owned files in
+# node_modules otherwise, and a later rebuild as a normal user then fails with
+# EACCES on node_modules/.vite-temp.
+BUILD_USER="${SUDO_USER:-}"
+if [ -n "$BUILD_USER" ] && [ "$BUILD_USER" != "root" ]; then
+  echo "==> Building the application (as $BUILD_USER)"
+  chown -R "$BUILD_USER":"$BUILD_USER" "$REPO_DIR"
+  sudo -u "$BUILD_USER" bash -lc "cd '$REPO_DIR' && npm ci && npm run build"
+else
+  echo "==> Building the application"
+  cd "$REPO_DIR"
+  npm ci
+  npm run build
+fi
 cd "$REPO_DIR"
-npm ci
-npm run build
 
 echo "==> Installing to $INSTALL_DIR"
 mkdir -p "$INSTALL_DIR"

@@ -1,6 +1,6 @@
 [Unit]
 Description=Samba Manager web console
-Documentation=https://github.com/OWNER/samba-manager
+Documentation=https://github.com/sakmist/samba-manager
 After=network-online.target smbd.service
 Wants=network-online.target
 

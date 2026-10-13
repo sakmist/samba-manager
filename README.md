@@ -41,7 +41,7 @@ shares, users and permissions — plus the original connection monitoring.
 ### 方式一：Docker Compose
 
 ```bash
-git clone <your-repo-url> samba-manager
+git clone https://github.com/sakmist/samba-manager.git
 cd samba-manager
 ADMIN_PASSWORD='换成你的强密码' docker compose up -d --build
 ```
@@ -57,7 +57,7 @@ ADMIN_PASSWORD='换成你的强密码' docker compose up -d --build
 适合“让管理器直接管理 NAS 上的 Samba”的场景：
 
 ```bash
-git clone <your-repo-url> samba-manager
+git clone https://github.com/sakmist/samba-manager.git
 cd samba-manager
 sudo ./deploy/install.sh
 ```
