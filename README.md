@@ -31,8 +31,36 @@ shares, users and permissions — plus the original connection monitoring.
 **工程**
 
 - 后端 Express + TypeScript（严格模式），前端 React + Vite + TypeScript
-- 26 个单元 / 接口测试（`vitest` + `supertest`），GitHub Actions 做类型检查、测试与镜像构建
+- 33 个单元 / 接口测试（`vitest` + `supertest`），GitHub Actions 做类型检查、测试与镜像构建
 - 提供 Docker 与主机 systemd 两种部署方式
+
+---
+
+## 界面预览
+
+**监控** — 活动会话、共享连接、锁定文件，以及新连接事件
+
+![监控](docs/screenshots/01-monitor.png)
+
+**共享管理** — 图形化增删改 `smb.conf` 共享段
+
+![共享管理](docs/screenshots/02-shares.png)
+
+**共享编辑** — 路径检查、可访问/可写用户、掩码与强制用户
+
+![共享编辑](docs/screenshots/03-share-editor.png)
+
+**用户管理** — 创建 / 删除 Samba 账号、改密码、启用停用
+
+![用户管理](docs/screenshots/04-users.png)
+
+**设置** — 通知渠道、排除 IP、轮询间隔、管理密码
+
+![设置](docs/screenshots/05-settings.png)
+
+**系统** — 环境自检、`testparm` 校验、重载 / 重启 Samba
+
+![系统](docs/screenshots/06-system.png)
 
 ---
 
