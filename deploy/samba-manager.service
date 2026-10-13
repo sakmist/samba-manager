@@ -1,0 +1,24 @@
+[Unit]
+Description=Samba Manager web console
+Documentation=https://github.com/OWNER/samba-manager
+After=network-online.target smbd.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+# The console runs smbstatus, smbpasswd and pdbedit, all of which need root.
+# See the README for a lower-privilege alternative using a sudoers allow-list.
+User=root
+Group=root
+WorkingDirectory=/opt/samba-manager
+EnvironmentFile=-/etc/samba-manager.env
+ExecStart=/usr/bin/node /opt/samba-manager/dist/server/index.js
+Restart=on-failure
+RestartSec=5
+# Basic hardening: the service only needs the filesystem, not a private /tmp
+# or new privileges.
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

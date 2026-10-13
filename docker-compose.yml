@@ -1,0 +1,29 @@
+services:
+  samba-manager:
+    build: .
+    image: samba-manager:latest
+    container_name: samba-manager
+    restart: unless-stopped
+    # Samba needs to manage its own passdb and lock files.
+    environment:
+      # Change this before exposing the console on the network.
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-change-me}
+      POLL_INTERVAL_SEC: "30"
+      AUTO_RELOAD: "true"
+      # Optional notification channels:
+      # DISCORD_WEBHOOK_URL: ""
+      # NTFY_TOPIC_URL: ""
+      # EXCLUDED_IPS: "192.168.1.10,192.168.1.11"
+    ports:
+      - "5069:5069" # web console
+      - "445:445"   # SMB - drop this if the host already runs Samba
+    volumes:
+      - ./data:/data                 # settings, credentials, session secret
+      - ./samba:/etc/samba           # smb.conf and the managed share fragment
+      - ./shares:/srv/samba          # example share root, adjust to taste
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:5069/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s

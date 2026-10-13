@@ -1,0 +1,9 @@
+# Normalise every text file to LF in the repository. Shell scripts, the
+# Dockerfile and the systemd unit all run on Linux, where CRLF line endings
+# would break them.
+* text=auto eol=lf
+
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.ico binary
